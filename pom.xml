@@ -45,13 +45,23 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		
+		<!-- mysql -->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+		
+		<!-- flyway -->
+		<dependency>
+            <groupId>org.flywaydb</groupId>
+            <artifactId>flyway-core</artifactId>
+            <version>6.5.0</version>
+        </dependency>
 	</dependencies>
 
+	
 	<build>
 		<plugins>
 			<plugin>
