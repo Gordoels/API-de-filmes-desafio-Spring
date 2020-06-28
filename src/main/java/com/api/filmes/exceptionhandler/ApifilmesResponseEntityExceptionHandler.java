@@ -33,7 +33,7 @@ public class ApifilmesResponseEntityExceptionHandler extends ResponseEntityExcep
 		
 		
 		String messageForUser = messageSource.getMessage("invalid.message", null, LocaleContextHolder.getLocale());
-		String messageForDeveloper = ex.getCause().toString();
+		String messageForDeveloper = ex.getCause() != null ? ex.getCause().toString() : ex.toString();
 		
 		List<Error> errors = Arrays.asList(new Error(messageForUser, messageForDeveloper));
 		return handleExceptionInternal(ex, errors, headers, HttpStatus.BAD_REQUEST, request);
