@@ -75,7 +75,7 @@ public class MovieResource {
 		return ResponseEntity.ok(savedMovie);
 	}
 	
-	@PutMapping("/{id}/adult")
+	@PutMapping("/{id}/title")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void updateAdultProperty(@PathVariable Long id, @RequestBody String title) {
 		movieService.updateTitleProperty(id, title);
