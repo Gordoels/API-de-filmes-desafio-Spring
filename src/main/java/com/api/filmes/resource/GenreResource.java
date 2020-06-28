@@ -1,5 +1,6 @@
 package com.api.filmes.resource;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletResponse;
@@ -37,8 +38,13 @@ public class GenreResource {
 	@Autowired
 	private GenreService genreService;
 	
+	@GetMapping
+	public List<Genre> findAllGenre(){
+		return genreRepo.findAll();
+	}
+	
 	@GetMapping("/{id}")
-	public Genre findAllGenre(@PathVariable Long id) {
+	public Genre findGenreById(@PathVariable Long id) {
 		Optional<Genre> genre = genreRepo.findById(id);
 
 		if(!genre.isPresent()) {
