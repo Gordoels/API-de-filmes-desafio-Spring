@@ -21,31 +21,31 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.api.filmes.event.EventResourceCreated;
-import com.api.filmes.model.Categoria;
-import com.api.filmes.repository.CategoriaRepository;
-import com.api.filmes.service.CategoriaService;
+import com.api.filmes.model.Actor;
+import com.api.filmes.repository.ActorRepository;
+import com.api.filmes.service.ActorService;
 
 @RestController
-@RequestMapping("/categorias")
-public class CategoriaResource {
+@RequestMapping("/actors")
+public class ActorResource {
 	
 	@Autowired
-	private CategoriaRepository catRepo;
+	private ActorRepository actorRepo;
 	
 	@Autowired
 	private ApplicationEventPublisher publisher;
 	
 	@Autowired
-	private CategoriaService catService;
+	private ActorService actorService;
 	
 	@GetMapping
-	public List<Categoria> listAllCategories() {
-		return catRepo.findAll();
+	public List<Actor> listAllActors() {
+		return actorRepo.findAll();
 	}
 	
 	@PostMapping
-	public ResponseEntity<Categoria> createCategory(@Valid @RequestBody Categoria cat, HttpServletResponse response) {
-		Categoria savedCategory = catRepo.save(cat);
+	public ResponseEntity<Actor> createActor(@Valid @RequestBody Actor actor, HttpServletResponse response) {
+		Actor savedCategory = actorRepo.save(actor);
 		
 		publisher.publishEvent(new EventResourceCreated(this, response, savedCategory.getId()));
 		
@@ -53,24 +53,24 @@ public class CategoriaResource {
 	}
 	
 	@GetMapping("/{id}")
-	public Categoria findCategoryById(@PathVariable Long id) {
-		Optional<Categoria> cat = catRepo.findById(id);
-		if(!cat.isPresent()) {
+	public Actor findActorById(@PathVariable Long id) {
+		Optional<Actor> actor = actorRepo.findById(id);
+		if(!actor.isPresent()) {
 			throw new IllegalArgumentException();
 		}
-		return cat.get();
+		return actor.get();
 	}
 	
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void removeCategory(@PathVariable Long id) {
-		catRepo.deleteById(id);
+	public void removeActor(@PathVariable Long id) {
+		actorRepo.deleteById(id);
 	}
 	
 	@PutMapping("/{id}")
-	public ResponseEntity<Categoria> updateCategory(@PathVariable Long id,@Valid @RequestBody Categoria categoria) {
-		Categoria savedCategory = catService.updateCategoria(id, categoria);
+	public ResponseEntity<Actor> updateActor(@PathVariable Long id,@Valid @RequestBody Actor actor) {
+		Actor savedActor = actorService.updateActor(id, actor);
 		
-		return ResponseEntity.ok(savedCategory);
+		return ResponseEntity.ok(savedActor);
 	}
 }

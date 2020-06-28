@@ -24,9 +24,9 @@ public class MovieService {
 		return movieRepo.save(savedMovie);
 	}
 
-	public void updateAdultProperty(Long id, Boolean adult) {
+	public void updateTitleProperty(Long id, String title) {
 		Movie savedMovie = findMovieById(id);
-		savedMovie.setAdult(adult);
+		savedMovie.setTitle(title);
 		
 		movieRepo.save(savedMovie);
 	}

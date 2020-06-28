@@ -1,42 +1,44 @@
 package com.api.filmes.model;
 
-import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table (name = "movie")
-public class Movie {
+@Table (name = "actor")
+public class Actor {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	@NotNull
-	@Size(min=1, max=50)
-	private String title;
+	@Size(min=1, max=40)
+	private String name;
 	
-	@Embedded
-	private MovieDescription description;
+	private String nationality;
 	
-	@ManyToOne
-	@JoinColumn(name = "id_genre")
-	private Genre genre;
+	private String birth;
 	
-
-	public Genre getGenre() {
-		return genre;
+	
+	public String getNationality() {
+		return nationality;
 	}
 
-	public void setGenre(Genre genre) {
-		this.genre = genre;
+	public void setNationality(String nationality) {
+		this.nationality = nationality;
+	}
+
+	public String getBirth() {
+		return birth;
+	}
+
+	public void setBirth(String birth) {
+		this.birth = birth;
 	}
 
 	public Long getId() {
@@ -47,22 +49,13 @@ public class Movie {
 		this.id = id;
 	}
 
-	public String getTitle() {
-		return title;
+	public String getName() {
+		return name;
 	}
 
-	public void setTitle(String title) {
-		this.title = title;
+	public void setName(String name) {
+		this.name = name;
 	}
-
-	public MovieDescription getDescription() {
-		return description;
-	}
-
-	public void setDescription(MovieDescription description) {
-		this.description = description;
-	}
-
 
 	@Override
 	public int hashCode() {
@@ -80,7 +73,7 @@ public class Movie {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Movie other = (Movie) obj;
+		Actor other = (Actor) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -88,6 +81,7 @@ public class Movie {
 			return false;
 		return true;
 	}
+
 	
-	
+
 }

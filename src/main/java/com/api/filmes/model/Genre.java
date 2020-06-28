@@ -9,8 +9,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Entity
-@Table (name = "categoria")
-public class Categoria {
+@Table (name = "genre")
+public class Genre {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,23 +20,36 @@ public class Categoria {
 	@Size(min=1, max=40)
 	private String name;
 	
+	private String rating;
+	private String description;
+	
 	
 	public Long getId() {
 		return id;
 	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
-
 	public String getName() {
 		return name;
 	}
-
 	public void setName(String name) {
 		this.name = name;
 	}
-
+	public String getRating() {
+		return rating;
+	}
+	public void setRating(String rating) {
+		this.rating = rating;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -44,7 +57,6 @@ public class Categoria {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -53,7 +65,7 @@ public class Categoria {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Categoria other = (Categoria) obj;
+		Genre other = (Genre) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -61,7 +73,4 @@ public class Categoria {
 			return false;
 		return true;
 	}
-
-	
-
 }

@@ -70,6 +70,18 @@
             <artifactId>flyway-core</artifactId>
             <version>6.5.0</version>
         </dependency>
+        
+        <!-- Hibernate -->
+        <dependency>
+    		<groupId>org.hibernate</groupId>
+    		<artifactId>hibernate-java8</artifactId>
+		</dependency>
+		
+		<!-- Jackson para data -->
+		<dependency>
+    		<groupId>com.fasterxml.jackson.datatype</groupId>
+    		<artifactId>jackson-datatype-jsr310</artifactId>
+		</dependency>
 	</dependencies>
 
 	
