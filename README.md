@@ -26,8 +26,7 @@
 
 create user 'apifilmes'@'localhost' identified by 'apifilmes';
 create database apifilmes;
-grant all on moviedb.* to 'moviedb'@'localhost';
-Then build the app (with tests) ./gradlew clean build
+Then build the app;
 
 
 ## Notes
