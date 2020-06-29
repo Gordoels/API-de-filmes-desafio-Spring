@@ -26,6 +26,7 @@ public class Movie {
 	@Embedded
 	private MovieDescription description;
 	
+	@NotNull
 	@ManyToOne
 	@JoinColumn(name = "id_genre")
 	private Genre genre;
