@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.api.filmes.model.Movie;
 import com.api.filmes.repository.MovieRepository;
+import com.api.filmes.repository.filter.MovieFilter;
 
 @Service
 public class MovieService {
@@ -51,7 +52,7 @@ public class MovieService {
 		return movieRepo.save(movie);
 	}
 
-	public List<Movie> findAllMovies() {
-		return movieRepo.findAll();
+	public List<Movie> findAllMovies(MovieFilter movieFilter) {
+		return movieRepo.movieFiltrator(movieFilter);
 	}
 }

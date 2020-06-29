@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.api.filmes.event.EventResourceCreated;
 import com.api.filmes.model.Movie;
+import com.api.filmes.repository.filter.MovieFilter;
 import com.api.filmes.service.MovieService;
 
 @RestController
@@ -34,8 +35,8 @@ public class MovieResource {
 	private MovieService movieService;
 	
 	@GetMapping
-	public List<Movie> findAllMovies(){
-		return movieService.findAllMovies();
+	public List<Movie> findAllMovies(MovieFilter movieFilter){
+		return movieService.findAllMovies(movieFilter);
 	}
 	
 	@GetMapping("/{id}")
