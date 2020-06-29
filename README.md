@@ -1,7 +1,9 @@
 API-Filmes
 
 Functional requirements
+
 User should be able to add new entries about movies: title, description, actors, genre
+
 Users should be able to list all entries
 Users should be able to filter movies by title
 Users should be able to edit movies
