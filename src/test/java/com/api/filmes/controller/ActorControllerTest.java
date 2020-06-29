@@ -1,7 +1,10 @@
 package com.api.filmes.controller;
 
-import static io.restassured.module.mockmvc.RestAssuredMockMvc.*;
-import static org.mockito.Mockito.*;
+import static io.restassured.module.mockmvc.RestAssuredMockMvc.given;
+import static io.restassured.module.mockmvc.RestAssuredMockMvc.standaloneSetup;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,8 +13,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 
-import com.api.filmes.model.Movie;
-import com.api.filmes.resource.MovieResource;
+import com.api.filmes.model.Actor;
+import com.api.filmes.resource.ActorResource;
 import com.api.filmes.service.ActorService;
 import com.api.filmes.service.GenreService;
 import com.api.filmes.service.MovieService;
@@ -19,10 +22,10 @@ import com.api.filmes.service.MovieService;
 import io.restassured.http.ContentType;
 
 @WebMvcTest
-public class MovieControllerTest {
+public class ActorControllerTest {
 
 	@Autowired
-	private MovieResource movieResource;
+	private ActorResource actorResource;
 	
 	@MockBean
 	private MovieService movieService;
@@ -35,38 +38,38 @@ public class MovieControllerTest {
 	
 	@BeforeEach
 	public void setup() {
-		standaloneSetup(this.movieResource);
+		standaloneSetup(this.actorResource);
 	}
 	
 	@Test
-	public void mustReturnSuccess_WhenSearchMovie() {
+	public void mustReturnSuccess_WhenSearchActor() {
 		
-		when(this.movieService.findMovieById(1L)).thenReturn(new Movie());
+		when(this.actorService.findGenreById(1L)).thenReturn(new Actor());
 		
 		given().accept(ContentType.JSON)
-		.when().get("/movies/{id}", 1L)
+		.when().get("/actors/{id}", 1L)
 		.then().statusCode(HttpStatus.OK.value());
 	}
 	
 	@Test
-	public void mustReturnNotFound_WhenSearchMovie() {
-		when(this.movieService.findMovieById(5L)).thenReturn(null);
+	public void mustReturnNotFound_WhenSearchActor() {
+		when(this.actorService.findGenreById(5L)).thenReturn(null);
 		
 		given().accept(ContentType.JSON)
-		.when().get("/movies/{id}", 5L)
+		.when().get("/actors/{id}", 5L)
 		.then().statusCode(HttpStatus.NOT_FOUND.value());
 	}
 	
 	@Test
-	public void mustReturnBadRequest_WhenSearchMovie() {
+	public void mustReturnBadRequest_WhenSearchActor() {
 		
 		given()
 			.accept(ContentType.JSON)
 		.when()
-			.get("/movies/{id}", "asd")
+			.get("/actors/{id}", "asd")
 		.then()
 			.statusCode(HttpStatus.BAD_REQUEST.value());
 		
-		verify(this.movieService, never()).findMovieById(-1L);
+		verify(this.actorService, never()).findGenreById(-1L);
 	}
 }

@@ -20,13 +20,13 @@ public class ActorService {
 	private ActorRepository actorRepo;
 	
 	public Actor updateActor(Long id, Actor actor) {
-		Actor savedActor = findActorById(id);
+		Actor savedActor = findGenreById(id);
 		BeanUtils.copyProperties(actor, savedActor, "id");
 		
 		return actorRepo.save(savedActor);
 	}
 
-	public Actor findActorById(Long id) {
+	public Actor findGenreById(Long id) {
 		Optional<Actor> savedActor = actorRepo.findById(id);
 		
 		if(!savedActor.isPresent()) {

@@ -49,7 +49,7 @@ public class ActorResource {
 	
 	@GetMapping("/{id}")
 	public Actor findActorById(@PathVariable Long id) {
-		Actor actor = actorService.findActorById(id);
+		Actor actor = actorService.findGenreById(id);
 		
 		return actor;
 	}
