@@ -38,4 +38,8 @@ public class Movie {
 	@JoinColumn(name = "id_genre")
 	private Genre genre;
 	
+	public Movie(Long id) {
+        this.id = id;
+    }
+	
 }
