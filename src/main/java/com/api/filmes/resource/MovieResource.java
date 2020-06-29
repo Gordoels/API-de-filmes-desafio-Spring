@@ -1,7 +1,6 @@
 package com.api.filmes.resource;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -22,15 +21,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.api.filmes.event.EventResourceCreated;
 import com.api.filmes.model.Movie;
-import com.api.filmes.repository.MovieRepository;
 import com.api.filmes.service.MovieService;
 
 @RestController
 @RequestMapping("/movies")
 public class MovieResource {
-
-	@Autowired
-	private MovieRepository movieRepo;
 	
 	@Autowired
 	private ApplicationEventPublisher publisher;
@@ -40,22 +35,19 @@ public class MovieResource {
 	
 	@GetMapping
 	public List<Movie> findAllMovies(){
-		return movieRepo.findAll();
+		return movieService.findAllMovies();
 	}
 	
 	@GetMapping("/{id}")
 	public Movie findMovieById(@PathVariable Long id) {
-		Optional<Movie> movie = movieRepo.findById(id);
+		Movie movie = movieService.findMovieById(id);
 
-		if(!movie.isPresent()) {
-			throw new IllegalArgumentException();
-		}
-		return movie.get();
+		return movie;
 	}
 	
 	@PostMapping
 	public ResponseEntity<Movie> createMovie(@Valid @RequestBody Movie movie, HttpServletResponse response) {
-		Movie savedMovie = movieRepo.save(movie);
+		Movie savedMovie = movieService.createMovie(movie);
 		
 		publisher.publishEvent(new EventResourceCreated(this, response, savedMovie.getId()));
 		
@@ -65,7 +57,7 @@ public class MovieResource {
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void removeMovie(@PathVariable Long id) {
-		movieRepo.deleteById(id);
+		movieService.deleteMovieById(id);
 	}
 	
 	@PutMapping("/{id}")

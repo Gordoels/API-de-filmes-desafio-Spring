@@ -1,6 +1,9 @@
 package com.api.filmes.service;
 
+import java.util.List;
 import java.util.Optional;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,11 +34,24 @@ public class MovieService {
 		movieRepo.save(savedMovie);
 	}
 
-	private Movie findMovieById(Long id) {
+	public Movie findMovieById(Long id) {
 		Optional<Movie> savedMovie = movieRepo.findById(id);
+		
 		if(!savedMovie.isPresent()) {
 			throw new EmptyResultDataAccessException(1);
 		}
 		return savedMovie.get();
+	}
+
+	public void deleteMovieById(Long id) {
+		movieRepo.deleteById(id);
+	}
+
+	public Movie createMovie(@Valid Movie movie) {
+		return movieRepo.save(movie);
+	}
+
+	public List<Movie> findAllMovies() {
+		return movieRepo.findAll();
 	}
 }

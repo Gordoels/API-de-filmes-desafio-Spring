@@ -1,7 +1,6 @@
 package com.api.filmes.resource;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -22,15 +21,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.api.filmes.event.EventResourceCreated;
 import com.api.filmes.model.Actor;
-import com.api.filmes.repository.ActorRepository;
 import com.api.filmes.service.ActorService;
 
 @RestController
 @RequestMapping("/actors")
 public class ActorResource {
-	
-	@Autowired
-	private ActorRepository actorRepo;
 	
 	@Autowired
 	private ApplicationEventPublisher publisher;
@@ -40,12 +35,12 @@ public class ActorResource {
 	
 	@GetMapping
 	public List<Actor> listAllActors() {
-		return actorRepo.findAll();
+		return actorService.findAllActors();
 	}
 	
 	@PostMapping
 	public ResponseEntity<Actor> createActor(@Valid @RequestBody Actor actor, HttpServletResponse response) {
-		Actor savedCategory = actorRepo.save(actor);
+		Actor savedCategory = actorService.createActors(actor);
 		
 		publisher.publishEvent(new EventResourceCreated(this, response, savedCategory.getId()));
 		
@@ -54,17 +49,15 @@ public class ActorResource {
 	
 	@GetMapping("/{id}")
 	public Actor findActorById(@PathVariable Long id) {
-		Optional<Actor> actor = actorRepo.findById(id);
-		if(!actor.isPresent()) {
-			throw new IllegalArgumentException();
-		}
-		return actor.get();
+		Actor actor = actorService.findActorById(id);
+		
+		return actor;
 	}
 	
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void removeActor(@PathVariable Long id) {
-		actorRepo.deleteById(id);
+		actorService.deleteActorById(id);
 	}
 	
 	@PutMapping("/{id}")

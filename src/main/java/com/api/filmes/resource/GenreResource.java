@@ -1,7 +1,6 @@
 package com.api.filmes.resource;
 
 import java.util.List;
-import java.util.Optional;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
@@ -22,15 +21,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.api.filmes.event.EventResourceCreated;
 import com.api.filmes.model.Genre;
-import com.api.filmes.repository.GenreRepository;
 import com.api.filmes.service.GenreService;
 
 @RestController
 @RequestMapping("/genres")
 public class GenreResource {
-	
-	@Autowired
-	private GenreRepository genreRepo;
 	
 	@Autowired
 	private ApplicationEventPublisher publisher;
@@ -40,22 +35,19 @@ public class GenreResource {
 	
 	@GetMapping
 	public List<Genre> findAllGenre(){
-		return genreRepo.findAll();
+		return genreService.findAllGenre();
 	}
 	
 	@GetMapping("/{id}")
 	public Genre findGenreById(@PathVariable Long id) {
-		Optional<Genre> genre = genreRepo.findById(id);
+		Genre genre = genreService.findGenreById(id);
 
-		if(!genre.isPresent()) {
-			throw new IllegalArgumentException();
-		}
-		return genre.get();
+		return genre;
 	}
 	
 	@PostMapping
 	public ResponseEntity<Genre> createGenre(@Valid @RequestBody Genre genre, HttpServletResponse response) {
-		Genre savedGenre = genreRepo.save(genre);
+		Genre savedGenre = genreService.createGenre(genre);
 		
 		publisher.publishEvent(new EventResourceCreated(this, response, savedGenre.getId()));
 		
@@ -65,7 +57,7 @@ public class GenreResource {
 	@DeleteMapping("/{id}")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void removeGenre(@PathVariable Long id) {
-		genreRepo.deleteById(id);
+		genreService.deleteGenreById(id);
 	}
 	
 	@PutMapping("/{id}")
