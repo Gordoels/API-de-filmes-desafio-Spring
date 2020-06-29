@@ -77,7 +77,7 @@ public class MovieResource {
 	
 	@PutMapping("/{id}/title")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
-	public void updateAdultProperty(@PathVariable Long id, @RequestBody String title) {
+	public void updateTitleProperty(@PathVariable Long id,@Valid @RequestBody String title) {
 		movieService.updateTitleProperty(id, title);
 	}
 }
